@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LinearRegression
@@ -40,13 +41,11 @@ clf.fit(X_train_scaled, y_train_encoded)
 lin_reg = LinearRegression()
 lin_reg.fit(X_train_scaled, gaji_train)
 
-# Minta Input dari User
-print("Masukkan skor minat kamu (1-10) untuk kategori berikut:")
-minat_teknologi = int(input("Minat Teknologi: "))
-minat_kreativitas = int(input("Minat Kreativitas: "))
-minat_sains = int(input("Minat Sains: "))
+# Ambil input dari command line argument atau gunakan nilai default
+minat_teknologi = int(sys.argv[1]) if len(sys.argv) > 1 else 5
+minat_kreativitas = int(sys.argv[2]) if len(sys.argv) > 2 else 5
+minat_sains = int(sys.argv[3]) if len(sys.argv) > 3 else 5
 
-# Pastikan input dalam range 1-10
 X_new = np.array([[minat_teknologi, minat_kreativitas, minat_sains]])
 X_new_scaled = scaler.transform(X_new)
 
@@ -56,5 +55,5 @@ predicted_profession = le.inverse_transform([predicted_profession_encoded])[0]
 predicted_salary = round(max(lin_reg.predict(X_new_scaled)[0], 0))  # 🔥 Cegah nilai negatif
 
 # Output lebih rapi
-print(f"\n Rekomendasi Profesi: {predicted_profession}")
-print(f" Estimasi Gaji: ${predicted_salary}")
+print(f"\nRekomendasi Profesi: {predicted_profession}")
+print(f"Estimasi Gaji: ${predicted_salary}")

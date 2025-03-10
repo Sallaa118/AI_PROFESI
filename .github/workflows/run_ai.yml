@@ -1,28 +1,25 @@
-name: Jalankan AI Profesi
+name: Jalankan AI Rekomendasi Profesi
 
 on:
   push:
     branches:
-      - main  # Jalan saat ada perubahan di branch main
-  schedule:
-    - cron: '0 12 * * *'  # Jalan setiap hari jam 12:00 UTC (jam 19:00 WIB)
+      - main
 
 jobs:
   run-ai:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout kode
         uses: actions/checkout@v3
 
       - name: Setup Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.8'  # Ganti versi Python kalau perlu
+          python-version: '3.8'
 
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
+      - name: Install dependensi
+        run: pip install -r requirements.txt
 
-      - name: Jalankan AI Rekomendasi Profesi
-        run: python ai_rekomendasi_profesi.py
+      - name: Jalankan model AI
+        run: python ai_rekomendasi_profesi.py 7 6 8  # Angka ini bisa diganti sesuai kebutuhan
